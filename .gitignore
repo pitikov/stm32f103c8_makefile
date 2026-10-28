@@ -1,0 +1,9 @@
+*.o
+*.elf
+*.bin
+*.hex
+*.[d,D]
+*~
+~*
+*.[bak,BAK]
+*.log
