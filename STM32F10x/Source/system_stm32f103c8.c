@@ -29,11 +29,19 @@
 /*---------------------------------------------------------------------------
   Define clocks
  *---------------------------------------------------------------------------*/
-/* ToDo: Add here your necessary defines for device initialization
-         following is an example for different system frequencies */
-#define XTAL            (12000000U)       /* Oscillator frequency */
 
-#define SYSTEM_CLOCK    (5 * XTAL)
+#ifndef HSE_VALUE
+#define HSE_VALUE       (8000000U)       /* High-speed external Oscillator frequency */
+#endif
+
+#ifndef LSE_VALUE
+#define LSE_VALUE       (32768U)        /* Low-speed external Oscillator frequency */
+#endif
+
+#define HSI_VALUE       (8000000)       /* High-speed internal Oscillator frequency */
+#define LSI_VALUE       (400000)        /* Low-speed internal Oscillator frequency */
+
+#define SYSTEM_CLOCK    (72000000LU)
 
 
 /*---------------------------------------------------------------------------
