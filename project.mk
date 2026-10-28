@@ -22,11 +22,11 @@ OBJ_DIR		    	:= $(BUILD_DIR)/.obj
 DEST_DIR            := $(BUILD_DIR)/target
 
 SRC_DIR  		    := $(PROJECT_DIR)src
-CMSIS_SRC           := $(PROJECT_DIR)CMSIS
+CMSIS_DIR           := $(PROJECT_DIR)CMSIS
 
-CORE_INC_DIR		:= $(CMSIS_DIR)Core
+CORE_INC_DIR		:= $(CMSIS_DIR)/Core
 DEVICE_DIR          := $(PROJECT_DIR)STM32F10x
-DEVICE_INC_DIR		:= $(DEVICE_DIR)Include
+DEVICE_INC_DIR		:= $(DEVICE_DIR)/Include
 DEVICE_SRC_DIR      := $(DEVICE_INC_DIR:Include=Source)
 
 # -------------------------------------------------------------------------
@@ -38,6 +38,7 @@ TARGET_BIN		    := $(TARGET_ELF:.elf=.bin)
 TARGET_MAP		    := $(TARGET_ELF:.elf=.map)
 
 OBJECTS             += $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%.o, $(wildcard $(SRC_DIR)/*.[c,cpp,S]))
+OBJECTS				+= $(patsubst $(DEVICE_SRC_DIR)/%, $(OBJ_DIR)/%.o, $(wildcard $(DEVICE_SRC_DIR)/*.c))
 
 default: $(TARGET_ELF) $(TARGET_BIN)
 
@@ -99,6 +100,10 @@ $(TARGET_ELF): $(OBJECTS) $(DEST_DIR)
 	$(LD) -o $@ $(OBJECTS) $(LD_FLAGS) $(LD_DEBUG) $(LD_LIBS) $(LD_DEFS)
 
 $(OBJ_DIR)/%.c.o: $(SRC_DIR)/%.c $(OBJ_DIR)
+	$(ECHO) "Компиляция C-файла '$<' в объектный файл '$@'"
+	$(CC) -c $< -o $@ $(C_FLAGS) $(C_DEFINES) $(C_DEBUG) $(INCLUDES)
+
+$(OBJ_DIR)/%.c.o: $(DEVICE_SRC_DIR)/%.c $(OBJ_DIR)
 	$(ECHO) "Компиляция C-файла '$<' в объектный файл '$@'"
 	$(CC) -c $< -o $@ $(C_FLAGS) $(C_DEFINES) $(C_DEBUG) $(INCLUDES)
 

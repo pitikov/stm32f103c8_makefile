@@ -1,6 +1,6 @@
 /**************************************************************************//**
- * @file     <Device>.h
- * @brief    CMSIS-Core(M) Device Header File for Device <Device>
+ * @file     stm32f103c8.h
+ * @brief    CMSIS-Core(M) Device Header File for Device STM32F103C8
  *
  * @version  V1.0.0
  * @date     18. July 2023
@@ -23,10 +23,8 @@
  * limitations under the License.
  */
 
-/* ToDo: rename this file from Device.h to '<Device>.h according to your device name */
-
-#ifndef <Device>_H      /* ToDo: replace '<Device>' with your device name */
-#define <Device>_H
+#ifndef STM32F103C8_H
+#define STM32F103C8_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,9 +62,9 @@ typedef enum IRQn
 /* ToDo: Add here your device specific interrupt numbers
          according the interrupt handlers defined in startup_Device.s
          eg.: Interrupt for Timer#1       TIM1_IRQHandler   ->   TIM1_IRQn */
-  <DeviceInterrupt first>_IRQn = 0,    /* first Device Interrupt*/
-  ...
-  <DeviceInterrupt last>_IRQn  = n     /* last Device Interrupt */
+  // <DeviceInterrupt first>_IRQn = 0,    /* first Device Interrupt*/
+  // ...
+  // <DeviceInterrupt last>_IRQn  = n     /* last Device Interrupt */
 } IRQn_Type;
 
 
@@ -98,38 +96,26 @@ typedef enum IRQn
 
 
 /* --------  Configuration of Core Peripherals  ----------------------------------- */
-/* ToDo: set the defines according your Device */
-/* ToDo: define the correct core revision
-         valid CMSIS core revision macro names are:
-           __CM0_REV, __CM0PLUS_REV, __CM1_REV, __CM3_REV, __CM4_REV, __CM7_REV
-           __CM23_REV, __CM33_REV, __CM35P_REV, __CM55_REV
-           __SC000_REV, __SC300_REV */
-#define __CM#_REV               0x0201U  /* Core Revision r2p1 */
-/* ToDo: define the correct core features for the <Device> */
+
+#define __CM3_REV               0x0201U  /* Core Revision r2p1 */
+
 #define __Vendor_SysTickConfig  0U       /* Set to 1 if different SysTick Config is used */
-#define __NVIC_PRIO_BITS        3U       /* Number of Bits used for Priority Levels */
+#define __NVIC_PRIO_BITS        4U       /* Number of Bits used for Priority Levels */
 #define __VTOR_PRESENT          1U       /* Set to 1 if VTOR is present */
 #define __MPU_PRESENT           1U       /* Set to 1 if MPU is present */
 #define __FPU_PRESENT           0U       /* Set to 1 if FPU is present */
 #define __FPU_DP                0U       /* Set to 1 if FPU is double precision FPU (default is single precision FPU) */
-#define __DSP_PRESENT           1U       /* Set to 1 if DSP extension are present */
-#define __SAUREGION_PRESENT     1U       /* Set to 1 if SAU regions are present */
-#define __PMU_PRESENT           1U       /* Set to 1 if PMU is present */
-#define __PMU_NUM_EVENTCNT      8U       /* Set number of PMU Event Counters */
+#define __DSP_PRESENT           0U       /* Set to 1 if DSP extension are present */
+#define __SAUREGION_PRESENT     0U       /* Set to 1 if SAU regions are present */
+#define __PMU_PRESENT           0U       /* Set to 1 if PMU is present */
+#define __PMU_NUM_EVENTCNT      0U       /* Set number of PMU Event Counters */
 #define __ICACHE_PRESENT        0U       /* Set to 1 if I-Cache is present */
 #define __DCACHE_PRESENT        0U       /* Set to 1 if D-Cache is present */
 #define __DTCM_PRESENT          0U       /* Set to 1 if DTCM is present */
 
 
-/* ToDo: include the CMSIS core header file according your device.
-         valid CMSIS core header files are:
-           core_cm0.h, core_cm0plus.h, core_cm1.h, core_cm3.h, core_cm4.h, core_cm7.h
-           core_cm23.h, core_cm33.h, core_cm35p.h, core_cm55.h
-           core_sc000.h, core_sc300.h */
-#include <core_cm#.h>                           /* Processor and core peripherals */
-/* ToDo: include your system_<Device>.h file
-         replace '<Device>' with your device name */
-#include "system_<Device>.h"                    /* System Header */
+#include <core_cm3.h>                           /* Processor and core peripherals */
+#include "system_stm32f103c8.h"                    /* System Header */
 
 
 
@@ -146,31 +132,31 @@ typedef enum IRQn
 /* ============                       TMR                       ============ */
 /* ========================================================================= */
 
-typedef struct
-{
-  __IOM uint32_t  LOAD;                 /* Offset: 0x000 (R/W) Load Register */
-  __IM  uint32_t  VALUE;                /* Offset: 0x004 (R/ ) Value Register */
-  __IOM uint32_t  CONTROL;              /* Offset: 0x008 (R/W) Control Register */
-  __OM  uint32_t  INTCLR;               /* Offset: 0x00C ( /W) Clear Interrupt Register */
-  __IM  uint32_t  RIS;                  /* Offset: 0x010 (R/ ) Raw Interrupt Status Register */
-  __IM  uint32_t  MIS;                  /* Offset: 0x014 (R/ ) Interrupt Status Register */
-  __IOM uint32_t  BGLOAD;               /* Offset: 0x018 (R/W) Background Load Register */
-} <DeviceAbbreviation>_TMR_TypeDef;
+// typedef struct
+// {
+//   __IOM uint32_t  LOAD;                 /* Offset: 0x000 (R/W) Load Register */
+//   __IM  uint32_t  VALUE;                /* Offset: 0x004 (R/ ) Value Register */
+//   __IOM uint32_t  CONTROL;              /* Offset: 0x008 (R/W) Control Register */
+//   __OM  uint32_t  INTCLR;               /* Offset: 0x00C ( /W) Clear Interrupt Register */
+//   __IM  uint32_t  RIS;                  /* Offset: 0x010 (R/ ) Raw Interrupt Status Register */
+//   __IM  uint32_t  MIS;                  /* Offset: 0x014 (R/ ) Interrupt Status Register */
+//   __IOM uint32_t  BGLOAD;               /* Offset: 0x018 (R/W) Background Load Register */
+// } <DeviceAbbreviation>_TMR_TypeDef;
 
-/* <DeviceAbbreviation>_TMR LOAD Register Definitions */
-#define <DeviceAbbreviation>_TMR_LOAD_Pos              0
-#define <DeviceAbbreviation>_TMR_LOAD_Msk             (0xFFFFFFFFUL /*<< <DeviceAbbreviation>_TMR_LOAD_Pos*/)
+// /* <DeviceAbbreviation>_TMR LOAD Register Definitions */
+// #define <DeviceAbbreviation>_TMR_LOAD_Pos              0
+// #define <DeviceAbbreviation>_TMR_LOAD_Msk             (0xFFFFFFFFUL /*<< <DeviceAbbreviation>_TMR_LOAD_Pos*/)
 
-/* <DeviceAbbreviation>_TMR VALUE Register Definitions */
-#define <DeviceAbbreviation>_TMR_VALUE_Pos             0
-#define <DeviceAbbreviation>_TMR_VALUE_Msk            (0xFFFFFFFFUL /*<< <DeviceAbbreviation>_TMR_VALUE_Pos*/)
+// /* <DeviceAbbreviation>_TMR VALUE Register Definitions */
+// #define <DeviceAbbreviation>_TMR_VALUE_Pos             0
+// #define <DeviceAbbreviation>_TMR_VALUE_Msk            (0xFFFFFFFFUL /*<< <DeviceAbbreviation>_TMR_VALUE_Pos*/)
 
-/* <DeviceAbbreviation>_TMR CONTROL Register Definitions */
-#define <DeviceAbbreviation>_TMR_CONTROL_SIZE_Pos      1
-#define <DeviceAbbreviation>_TMR_CONTROL_SIZE_Msk     (1UL << <DeviceAbbreviation>_TMR_CONTROL_SIZE_Pos)
+// /* <DeviceAbbreviation>_TMR CONTROL Register Definitions */
+// #define <DeviceAbbreviation>_TMR_CONTROL_SIZE_Pos      1
+// #define <DeviceAbbreviation>_TMR_CONTROL_SIZE_Msk     (1UL << <DeviceAbbreviation>_TMR_CONTROL_SIZE_Pos)
 
-#define <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Pos   0
-#define <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Msk  (1UL /*<< <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Pos*/)
+// #define <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Pos   0
+// #define <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Msk  (1UL /*<< <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Pos*/)
 
 
 
@@ -203,14 +189,14 @@ typedef struct
          following is an example for timer */
 
 /* Peripheral and SRAM base address */
-#define <DeviceAbbreviation>_FLASH_BASE       (0x00000000UL)                              /* (FLASH     ) Base Address */
-#define <DeviceAbbreviation>_SRAM_BASE        (0x20000000UL)                              /* (SRAM      ) Base Address */
-#define <DeviceAbbreviation>_PERIPH_BASE      (0x40000000UL)                              /* (Peripheral) Base Address */
+// #define <DeviceAbbreviation>_FLASH_BASE       (0x00000000UL)                              /* (FLASH     ) Base Address */
+// #define <DeviceAbbreviation>_SRAM_BASE        (0x20000000UL)                              /* (SRAM      ) Base Address */
+// #define <DeviceAbbreviation>_PERIPH_BASE      (0x40000000UL)                              /* (Peripheral) Base Address */
 
 /* Peripheral memory map */
-#define <DeviceAbbreviation>TIM0_BASE         (<DeviceAbbreviation>_PERIPH_BASE)          /* (Timer0    ) Base Address */
-#define <DeviceAbbreviation>TIM1_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x0800) /* (Timer1    ) Base Address */
-#define <DeviceAbbreviation>TIM2_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x1000) /* (Timer2    ) Base Address */
+// #define <DeviceAbbreviation>TIM0_BASE         (<DeviceAbbreviation>_PERIPH_BASE)          /* (Timer0    ) Base Address */
+// #define <DeviceAbbreviation>TIM1_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x0800) /* (Timer1    ) Base Address */
+// #define <DeviceAbbreviation>TIM2_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x1000) /* (Timer2    ) Base Address */
 
 
 /* ========================================================================= */
@@ -221,12 +207,12 @@ typedef struct
 /* ToDo: Add here your device peripherals pointer definitions
          following is an example for timer */
 
-#define <DeviceAbbreviation>_TIM0        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
-#define <DeviceAbbreviation>_TIM1        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
-#define <DeviceAbbreviation>_TIM2        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
+// #define <DeviceAbbreviation>_TIM0        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
+// #define <DeviceAbbreviation>_TIM1        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
+// #define <DeviceAbbreviation>_TIM2        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  /* <Device>_H */
+#endif  /* STM32F103C8_H */

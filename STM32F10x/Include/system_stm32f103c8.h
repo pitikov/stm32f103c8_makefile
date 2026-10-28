@@ -1,7 +1,7 @@
 /*************************************************************************//**
- * @file     system_<Device>.h
+ * @file     system_stm32f103c8.h
  * @brief    CMSIS-Core(M) Device Peripheral Access Layer Header File for
- *           Device <Device>
+ *           Device STM32F103C8
  * @version  V1.0.1
  * @date     11. July 2022
  *****************************************************************************/
@@ -23,10 +23,8 @@
  * limitations under the License.
  */
  
-/* ToDo: rename this file from 'system_Device.h' to 'system_<Device>.h according to your device naming */
-
-#ifndef SYSTEM_<Device>_H   /* ToDo: replace '<Device>' with your device name */
-#define SYSTEM_<Device>_H
+#ifndef SYSTEM_STM32F103C8_H
+#define SYSTEM_STM32F103C8_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,4 +61,4 @@ extern void SystemCoreClockUpdate (void);
 }
 #endif
 
-#endif /* SYSTEM_<Device>_H */
+#endif /* SYSTEM_STM32F103C8_H */
