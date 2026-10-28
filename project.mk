@@ -17,11 +17,17 @@ ECHO				:= @echo
 
 PROJECT_DIR			:= $(dir $(lastword $(MAKEFILE_LIST)))
 
-BUILD_DIR 		    := $(PROJECT_DIR)/build
+BUILD_DIR 		    := $(PROJECT_DIR)build
 OBJ_DIR		    	:= $(BUILD_DIR)/.obj
 DEST_DIR            := $(BUILD_DIR)/target
 
-SRC_DIR  		    := $(PROJECT_DIR)/src
+SRC_DIR  		    := $(PROJECT_DIR)src
+CMSIS_SRC           := $(PROJECT_DIR)CMSIS
+
+CORE_INC_DIR		:= $(CMSIS_DIR)Core
+DEVICE_DIR          := $(PROJECT_DIR)STM32F10x
+DEVICE_INC_DIR		:= $(DEVICE_DIR)Include
+DEVICE_SRC_DIR      := $(DEVICE_INC_DIR:Include=Source)
 
 # -------------------------------------------------------------------------
 # --------              Цели сборки проекта                         -------
@@ -31,23 +37,81 @@ TARGET_ELF		    := $(DEST_DIR)/$(PROJECT_NAME).elf
 TARGET_BIN		    := $(TARGET_ELF:.elf=.bin)
 TARGET_MAP		    := $(TARGET_ELF:.elf=.map)
 
+OBJECTS             += $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%.o, $(wildcard $(SRC_DIR)/*.[c,cpp,S]))
+
 default: $(TARGET_ELF) $(TARGET_BIN)
 
+clean:
+	$(ECHO) "Очистка проекта $(PROJECT_NAME)"
+	$(RM) -Rf $(BUILD_DIR)
 
+# -------------------------------------------------------------------------
+# --------          Флаги архитектуры целевой платформы             -------
+# -------------------------------------------------------------------------
+
+ARCH				+= -mcpu=cortex-m3
+ARCH				+= -mlittle-endian
+ARCH				+= -march=armv7-m
+ARCH				+= -mthumb
+ARCH				+= -msoft-float
+
+
+# -------------------------------------------------------------------------
+# --------              Флаги компиляции C файлов                   -------
+# -------------------------------------------------------------------------
+
+C_FLAGS				+= -MD
+C_FLAGS				+= $(ARCH)
+
+# -------------------------------------------------------------------------
+# --------                   Флаги компановщика                     -------
+# -------------------------------------------------------------------------
+
+LD_FLAGS			+= $(ARCH)
+LD_FLAGS			+= -Wl,-Map=$(TARGET_MAP)
+
+ifeq ($(DEBUG_BUILD), true)
+LD_FLAGS			+= --specs=rdimon.specs
+else
+LD_FLAGS			+= --specs=nano.specs
+endif
+
+# -------------------------------------------------------------------------
+# --------          Каталоги поиска файлов декларации API           -------
+# -------------------------------------------------------------------------
+
+INCDIRS 			+= $(SRC_DIR)
+INCDIRS				+= $(CORE_INC_DIR)
+INCDIRS				+= $(DEVICE_INC_DIR)
+
+INCLUDES			:= $(foreach i,$(INCDIRS),-I$i)
 
 # -------------------------------------------------------------------------
 # --------              Правила сборки проекта                      -------
 # -------------------------------------------------------------------------
 
-.SILENT: $(DEST_DIR) $(OBJ_DIR)
-
+$(TARGET_BIN): $(TARGET_ELF)
+	$(ECHO) "Бинарное копирование $< в $@"
+	$(OBJCOPY) -Obinary $< $@
 
 $(TARGET_ELF): $(OBJECTS) $(DEST_DIR)
 	$(ECHO) "Компановка $@ из ${OBJECTS}"
 	$(LD) -o $@ $(OBJECTS) $(LD_FLAGS) $(LD_DEBUG) $(LD_LIBS) $(LD_DEFS)
+
+$(OBJ_DIR)/%.c.o: $(SRC_DIR)/%.c $(OBJ_DIR)
+	$(ECHO) "Компиляция C-файла '$<' в объектный файл '$@'"
+	$(CC) -c $< -o $@ $(C_FLAGS) $(C_DEFINES) $(C_DEBUG) $(INCLUDES)
 
 $(DEST_DIR):
 	$(MKDIR) $@
 
 $(OBJ_DIR):
 	$(MKDIR) $@
+
+include $(wildcard $(OBJ_DIR)/*.d)
+
+.SILENT: $(DEST_DIR) $(OBJ_DIR)
+.SILENT: clean
+
+.PHONY: clean
+.PHONY: erase
