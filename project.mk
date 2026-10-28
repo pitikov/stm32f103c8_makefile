@@ -68,8 +68,11 @@ C_FLAGS				+= $(ARCH)
 # --------                   Флаги компановщика                     -------
 # -------------------------------------------------------------------------
 
+LD_SCRIPT			:= $(DEVICE_INC_DIR:Include=Config)/stm32f103c8_gcc.ld
+
 LD_FLAGS			+= $(ARCH)
 LD_FLAGS			+= -Wl,-Map=$(TARGET_MAP)
+LD_FLAGS			+= -Wl,-T$(LD_SCRIPT)
 
 ifeq ($(DEBUG_BUILD), true)
 LD_FLAGS			+= --specs=rdimon.specs
