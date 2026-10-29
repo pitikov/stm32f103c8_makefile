@@ -93,6 +93,17 @@ LD_FLAGS			+= --specs=nano.specs
 endif
 
 # -------------------------------------------------------------------------
+# --------              Макроопределения компоновщика               -------
+# -------------------------------------------------------------------------
+
+LD_DEFINES			+= -Wl,--defsym=ROM_BASE=0x08000000
+LD_DEFINES			+= -Wl,--defsym=RAM_SIZE=20K
+LD_DEFINES			+= -Wl,--defsym=RAM_BASE=0x20000000
+LD_DEFINES		    += -Wl,--defsym=ROM_SIZE=64K
+LD_DEFINES			+= -Wl,--defsym=HEAP_SIZE=$(HEAP_SIZE)
+LD_DEFINES			+= -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
+
+# -------------------------------------------------------------------------
 # --------          Каталоги поиска файлов декларации API           -------
 # -------------------------------------------------------------------------
 
@@ -112,7 +123,7 @@ $(TARGET_BIN): $(TARGET_ELF)
 
 $(TARGET_ELF): $(OBJECTS) $(DEST_DIR)
 	$(ECHO) "Компановка $@ из ${OBJECTS}"
-	$(LD) -o $@ $(OBJECTS) $(LD_FLAGS) $(LD_DEBUG) $(LD_LIBS) $(LD_DEFS)
+	$(LD) -o $@ $(OBJECTS) $(LD_FLAGS) $(LD_DEBUG) $(LD_LIBS) $(LD_DEFINES)
 
 $(OBJ_DIR)/%.c.o: $(SRC_DIR)/%.c $(OBJ_DIR)
 	$(ECHO) "Компиляция C-файла '$<' в объектный файл '$@'"
