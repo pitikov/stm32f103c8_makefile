@@ -75,6 +75,11 @@ C_DEFINES			= $(foreach d,$(C_DEFS),-D$d)
 C_FLAGS				+= -MD
 C_FLAGS				+= $(ARCH)
 
+ifeq ($(DEBUG_BUILD), true)
+	C_DEBUG += -g -ggdb -Og
+else
+	C_FLAGS += -O0
+endif
 
 # -------------------------------------------------------------------------
 # --------                   Флаги компановщика                     -------
@@ -86,11 +91,23 @@ LD_FLAGS			+= $(ARCH)
 LD_FLAGS			+= -Wl,-Map=$(TARGET_MAP)
 LD_FLAGS			+= -Wl,-T$(LD_SCRIPT)
 
+
+# -------------------------------------------------------------------------
+# --------                 Компануемые библиотеки                   -------
+# -------------------------------------------------------------------------
+
+LIBS                += c
+LIBS                += m
+LIBS                += g
+LIBS                += gcc
+
 ifeq ($(DEBUG_BUILD), true)
 LD_FLAGS			+= --specs=rdimon.specs
 else
 LD_FLAGS			+= --specs=nano.specs
 endif
+
+LD_LIBS				+= $(foreach l,$(LIBS),-l$l)
 
 # -------------------------------------------------------------------------
 # --------              Макроопределения компоновщика               -------
