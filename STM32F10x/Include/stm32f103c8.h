@@ -39,7 +39,6 @@ typedef enum IRQn
 {
 /* ================     Cortex-M Core Exception Numbers     ================ */
 
-/* ToDo: add Cortex exception numbers according the used Cortex-Core */
   Reset_IRQn             = -15,  /*  1 Reset Vector
                                        invoked on Power up and warm reset */
   NonMaskableInt_IRQn    = -14,  /*  2 Non maskable Interrupt
@@ -58,13 +57,69 @@ typedef enum IRQn
   PendSV_IRQn            =  -2,  /* 14 Pendable request for system service */
   SysTick_IRQn           =  -1,  /* 15 System Tick Timer */
 
-/* ================        <Device> Interrupt Numbers       ================ */
-/* ToDo: Add here your device specific interrupt numbers
-         according the interrupt handlers defined in startup_Device.s
-         eg.: Interrupt for Timer#1       TIM1_IRQHandler   ->   TIM1_IRQn */
-  // <DeviceInterrupt first>_IRQn = 0,    /* first Device Interrupt*/
-  // ...
-  // <DeviceInterrupt last>_IRQn  = n     /* last Device Interrupt */
+/* ================        STM32F103C8 Interrupt Numbers       ================ */
+
+  WWDG_IRQn,           // Window watchdog interrupt
+  PVDP_IRQn,           // VD through EXTI Line detection interrupt
+  TAMPER_IRQn,         // Tamper interrupt
+  RTC_IRQn,            // RTC global interrupt
+  FLASH_IRQn,          // Flash global interrupt
+  RCC_IRQn,            // RCC global interrupt
+  EXTI0_IRQn,          // EXTI Line0 interrupt
+  EXTI1_IRQn,          // EXTI Line1 interrupt
+  EXTI2_IRQn,          // EXTI Line2 interrupt
+  EXTI3_IRQn,          // EXTI Line3 interrupt
+  EXTI4_IRQn,          // EXTI Line4 interrupt
+  DMA1_Channel1_IRQn,  // DMA1 Channel1 global interrupt
+  DMA1_Channel2_IRQn,  // DMA1 Channel2 global interrupt
+  DMA1_Channel3_IRQn,  // DMA1 Channel3 global interrupt
+  DMA1_Channel4_IRQn,  // DMA1 Channel4 global interrupt
+  DMA1_Channel5_IRQn,  // DMA1 Channel5 global interrupt
+  DMA1_Channel6_IRQn,  // DMA1 Channel6 global interrupt
+  DMA1_Channel7_IRQn,  // DMA1 Channel7 global interrupt
+  ADC1_2_IRQn,         // ADC1 and ADC2 global interrupt
+  USB_HP_CAN_TX_IRQn,  // USB High Priority or CAN TX interrupts
+  USB_LP_CAN_RX0_IRQn, // USB Low Priority or CAN RX0 interrupts
+  CAN_RX1_IRQn,        // CAN RX1 interrupt
+  CAN_SCE_IRQn,        // CAN SCE interrupt
+  EXTI9_5_IRQn,        // EXTI Line[9:5] interrupts
+  TIM1_BRK_IRQn,       // TIM1 Break interrupt
+  TIM1_UP_IRQn,        // TIM1 Update interrupt
+  TIM1_TRG_COM_IRQn,   // TIM1 Trigger and Commutation interrupts
+  TIM1_CC_IRQn,        // TIM1 Capture Compare interrupt
+  TIM2_IRQn,           // TIM2 global interrupt
+  TIM3_IRQn,           // TIM3 global interrupt
+  TIM4_IRQn,           // TIM4 global interrupt
+  I2C1_EV_IRQn,        // I2C1 event interrupt
+  I2C1_ER_IRQn,        // I2C1 error interrupt
+  I2C2_EV_IRQn,        // I2C2 event interrupt
+  I2C2_ER_IRQn,        // I2C2 error interrupt
+  SPI1_IRQn,           // SPI1 global interrupt
+  SPI2_IRQn,           // SPI2 global interrupt
+  USART_IRQn,          // 1USART1 global interrupt
+  USART2_IRQn,         // USART2 global interrupt
+  USART3_IRQn,         // USART3 global interrupt
+  EXTI15_10_IRQn,      // EXTI Line[15:10] interrupts
+  RTCAlarm_IRQn,       // RTC alarm through EXTI line interrupt
+  USBWakeup_IRQn,      // USB wakeup from suspend through EXTI line interrupt
+  TIM8_BRK_IRQn,       // TIM8 Break interrupt
+  TIM8_UP_IRQn,        // TIM8 Update interrupt
+  TIM8_TRG_COM_IRQn,   // TIM8 Trigger and Commutation interrupts
+  TIM8_CC_IRQn,        // TIM8 Capture Compare interrupt
+  ADC3_IRQn,           // ADC3 global interrupt
+  FSMC_IRQn,           // FSMC global interrupt
+  SDIO_IRQn,           // SDIO global interrupt
+  TIM5_IRQn,           // TIM5 global interrupt
+  SPI3_IRQn,           // SPI3 global interrupt
+  UART4_IRQn,          // UART4 global interrupt
+  UART5_IRQn,          // UART5 global interrupt
+  TIM6_IRQn,           // TIM6 global interrupt
+  TIM7_IRQn,           // TIM7 global interrupt
+  DMA2_Channel1_IRQn,  // DMA2 Channel1 global interrupt
+  DMA2_Channel2_IRQn,  // DMA2 Channel2 global interrupt
+  DMA2_Channel3_IRQn,  // DMA2 Channel3 global interrupt
+  DMA2_Channel4_5_IRQn, // DMA2 Channel4 and DMA2 Channel5 global interrupts
+
 } IRQn_Type;
 
 
@@ -115,9 +170,7 @@ typedef enum IRQn
 
 
 #include <core_cm3.h>                           /* Processor and core peripherals */
-#include "system_stm32f103c8.h"                    /* System Header */
-
-
+#include "system_stm32f103c8.h"                 /* System Header */
 
 /* ========================================================================= */
 /* ============       Device Specific Peripheral Section        ============ */
