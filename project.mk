@@ -65,6 +65,7 @@ endif
 
 C_DEFS				+= HSE_VALUE=$(HSE_VALUE)
 C_DEFS				+= LSE_VALUE=$(LSE_VALUE)
+C_DEFS				+= DEVICE=$(DEVICE)
 
 C_DEFINES			= $(foreach d,$(C_DEFS),-D$d)
 

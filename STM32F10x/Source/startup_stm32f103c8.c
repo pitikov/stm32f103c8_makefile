@@ -106,6 +106,9 @@ void TIM8_BRK_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), n
 void TIM8_UP_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));        // TIM8 Update interrupt
 void TIM8_TRG_COM_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));   // TIM8 Trigger and Commutation interrupts
 void TIM8_CC_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));        // TIM8 Capture Compare interrupt
+
+#if (defined(DEVICE) && (DEVICE != STM32F103C8))
+// Следующие вектора прерываний не доступны для STM32F103C8
 void ADC3_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));           // ADC3 global interrupt
 void FSMC_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));           // FSMC global interrupt
 void SDIO_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));           // SDIO global interrupt
@@ -119,6 +122,7 @@ void DMA2_Channel1_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler
 void DMA2_Channel2_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));  // DMA2 Channel2 global interrupt
 void DMA2_Channel3_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));  // DMA2 Channel3 global interrupt
 void DMA2_Channel4_5_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler"), noreturn));// DMA2 Channel4 and DMA2 Channel5 global interrupts
+#endif
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
@@ -196,6 +200,8 @@ const VECTOR_TABLE_Type __VECTOR_TABLE[76] __VECTOR_TABLE_ATTRIBUTE = {
     TIM8_UP_IRQHandler,         // TIM8 Update interrupt
     TIM8_TRG_COM_IRQHandler,    // TIM8 Trigger and Commutation interrupts
     TIM8_CC_IRQHandler,         // TIM8 Capture Compare interrupt
+    
+    #if (defined(DEVICE) && (DEVICE != STM32F103C8))
     ADC3_IRQHandler,            // ADC3 global interrupt
     FSMC_IRQHandler,            // FSMC global interrupt
     SDIO_IRQHandler,            // SDIO global interrupt
@@ -209,6 +215,10 @@ const VECTOR_TABLE_Type __VECTOR_TABLE[76] __VECTOR_TABLE_ATTRIBUTE = {
     DMA2_Channel2_IRQHandler,   // DMA2 Channel2 global interrupt
     DMA2_Channel3_IRQHandler,   // DMA2 Channel3 global interrupt
     DMA2_Channel4_5_IRQHandler, // DMA2 Channel4 and DMA2 Channel5 global interrupts
+    #else
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    #endif
+
 };
 
 #if defined ( __GNUC__ )

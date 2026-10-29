@@ -8,7 +8,8 @@ DEBUG_BUILD				:= true
 HSE_VALUE				:= 8000000
 LSE_VALUE				:= 32768
 
-# GDB_SRV				[openocd,pyocd,jlink]
-GDB_SRV					:= jlink
+DEVICE					:= STM32F103C8
+
+
 
 include project.mk
